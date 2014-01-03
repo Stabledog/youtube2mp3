@@ -22,7 +22,7 @@
 
 PROGNAME=`basename $0`
 
-function help()
+function help
 {
 	echo
 	echo "Usage: $PROGNAME [args]"
@@ -47,20 +47,20 @@ function help()
 	echo
 }
 
-function zenity_cancel()
+function zenity_cancel
 {
 	local l_op=$1
 	zenity --title="$var_title" --info\
 		--text="Operation [$l_op] cancelled"
 }
 
-function kdialog_cancel()
+function kdialog_cancel
 {
 	local l_op=$1
 	kdialog --msgbox "Operation [$l_op] cancelled" --title="$var_title"
 }
 
-function zenity_address()
+function zenity_address
 {
 	local l_addrprompt="Enter Youtube address:"
 	address=$(zenity --width=600 --height=150\
@@ -74,7 +74,7 @@ function zenity_address()
 	fi
 }
 
-function kdialog_address()
+function kdialog_address
 {
 	local l_addrprompt="Enter Youtube address:"
 	address=$(kdialog\
@@ -87,7 +87,7 @@ function kdialog_address()
 	fi
 }
 
-function zenity_dir()
+function zenity_dir
 {
 	local l_dirprompt="Select the destination directory for your MP3 file:"
 	dest_dir="$(zenity --title="$var_title"\
@@ -100,7 +100,7 @@ function zenity_dir()
 	fi
 }
 
-function kdialog_dir()
+function kdialog_dir
 {
 	local l_dirprompt="Select the destination directory for your MP3 file:"
 	dest_dir="$(kdialog --title="$var_title $l_dirprompt "\
@@ -112,7 +112,7 @@ function kdialog_dir()
 	fi
 }
 
-function zenity_bitrate()
+function zenity_bitrate
 {
 	bitrate=$(zenity\
 		  --title="$var_title"\
@@ -123,13 +123,13 @@ function zenity_bitrate()
 	local l_retstat=$?
 }
 
-function kdialog_bitrate()
+function kdialog_bitrate
 {
 	bitrate=$(kdialog --title="$var_title" --radiolist "Select MP3 Bitrate" 128 "128" off 192 "192" off 256 "256" on;)
 	local l_retstat=$?
 }
 
-function zenity_keepvideo()
+function zenity_keepvideo
 {
 	zenity\
 		--question\
@@ -138,7 +138,7 @@ function zenity_keepvideo()
 	delete_video=$?
 }
 
-function kdialog_keepvideo()
+function kdialog_keepvideo
 {
 	kdialog\
 		--title="$var_title"\
@@ -146,7 +146,7 @@ function kdialog_keepvideo()
 	delete_video=$?
 }
 
-function zenity_mp3ready()
+function zenity_mp3ready
 {
 	zenity --width=260\
 		--height=130\
@@ -155,36 +155,37 @@ function zenity_mp3ready()
 		--text="Your MP3 file is ready."
 }
 
-function kdialog_mp3ready()
+function kdialog_mp3ready
 {
 	kdialog\
 		--title="$var_title"\
 		--msgbox "Your MP3 file is ready."
 }
 
-function zenity_error()
+function zenity_error
 {
 	zenity --error\
 		--text="$err"
 }
 
-function kdialog_error()
+function kdialog_error
 {
 	kdialog\
 		--title="$var_title"\
 		--error "$err"
 }
 
-function get_video_convert_extract()
+function get_video_convert_extract
 {
 	local l_vidid=${1}
-	l_vidid=$(echo $l_vidid | cut -d'&' -f1)
+	local address=${2}
 	local l_vidtitle="$(youtube-dl --get-title $address)"
 
 	# replace spawn-of-satan-whitespace with dashes
 	l_vidtitle="$(echo $l_vidtitle | tr '[:blank:]' -)"
 
-    ${dnload} $address | stdbuf -i0 -o0 -e0 tr '\r' '\n' | stdbuf -i0 -o0 -e0 grep -e 'download.*ETA' | stdbuf -i0 -o0 -e0 sed -e 's/.download. //' | stdbuf -i0 -o0 -e0 sed -e 's/%.*//' | stdbuf -i0 -o0 -e0 sed -e 's/\..*//' | stdbuf -i0 -o0 -e0 sed -e 's/ *//' | zenity --progress --text="Downloading the video file from YouTube..." --auto-close --percentage=0
+    #${dnload} $address | stdbuf -i0 -o0 -e0 tr '\r' '\n' | stdbuf -i0 -o0 -e0 grep -e 'download.*ETA' | stdbuf -i0 -o0 -e0 sed -e 's/.download. //' | stdbuf -i0 -o0 -e0 sed -e 's/%.*//' | stdbuf -i0 -o0 -e0 sed -e 's/\..*//' | stdbuf -i0 -o0 -e0 sed -e 's/ *//' | zenity --progress --text="Downloading the video file from YouTube..." --auto-close --percentage=0
+    ${dnload} $address 
 
 
 	if [ -e "${l_vidid}".flv ]; then
@@ -217,151 +218,171 @@ function get_video_convert_extract()
 	fi
 }
 
-#
-# Script execution starts here
-#
+function parseArgs {
+	# default is to delete the downloaded video file
+	delete_video=1
+	interactive=0
+	have_url=0
 
-var_title="YouTube MP3 Extractor"
+	# arg defaults
+	dest_dir="$(pwd)"
+	dflt_bitrate=256
+	bitrate=$dflt_bitrate
 
-# default is to delete the downloaded video file
-delete_video=1
+	for arg in "$@"
+	do
+		case $arg in
+		(--help)
+			help
+			exit 0
+			;;
 
-# Check env for use Gnome (zenity) or Kde (kdialog)
-# Info here:
-#             http://enzotib.blogspot.com.es/
-#             http://askubuntu.com/questions/72549/determine-what-window-manager-or-desktop-is-running
-if [ "$DESKTOP_SESSION" = "kde-plasma" ]; then
-   windows=kdialog
-else
-   windows=zenity
-fi
+		(--url=*)
+			address="${arg:6}"
+			have_url=1
+			;;
 
-# avconv is a replacement for ffmpeg
-# I default to avconv simply because my main distros are
-# ubuntu-based, and these distros have moved to avconv.
-#
-# If you prefer ffmpeg to be the default then just change the if test
-if [ 1 -eq 1 ]; then
-	dflt_conv=ffmpeg
-	alt_conv=avconv
-else
-	dflt_conv=avconv
-	alt_conv=ffmpeg
-fi
-avconv=${dflt_conv}
+		(--odir=*)
+			dest_dir="${arg:7}"
+			;;
 
-dnload="youtube-dl"
-audenc=lame
+		(--rate=*)
+			bitrate=${arg:7}
+			case $bitrate in
+				(128 |\
+				192 |\
+				256 |\
+				320)
+					;;
+				(*)
+					if [ 1 -eq 0 ]; then
+					# invalid bitrate, query user for new rate
+					zenity_bitrate
+					else
+					# just set to a valid value
+					echo -n "$PROGNAME:"
+					echo -n " Invalid rate \"$bitrate\","
+					echo " defaulting to $dflt_bitrate"
+					bitrate=$dflt_bitrate
+					fi
+					;;
+			esac
+			;;
 
-if [ $# -gt 0 ]; then
-  interactive=0
-  have_url=0
+		(--vkeep)
+			delete_video=0
+			;;
 
-  # arg defaults
-  dest_dir="$(pwd)"
-  dflt_bitrate=256
-  bitrate=$dflt_bitrate
+		(--${alt_conv})
+			avconv=$alt_conv
+			;;
 
-  for arg in "$@"
-  do
-	case $arg in
-	(--help)
-		help
-		exit 0
-		;;
+		(--*)
+			echo
+			echo "$PROGNAME: Invalid option given: \"$arg\""
+			help
+			exit -3
+			;;
 
-	(--url=*)
-		address="${arg:6}"
-		have_url=1
-		;;
-
-	(--odir=*)
-		dest_dir="${arg:7}"
-		;;
-
-	(--rate=*)
-		bitrate=${arg:7}
-		case $bitrate in
-			(128 |\
-			 192 |\
-			 256 |\
-			 320)
-				;;
-			(*)
-				if [ 1 -eq 0 ]; then
-				  # invalid bitrate, query user for new rate
-				  zenity_bitrate
-				else
-				  # just set to a valid value
-				  echo -n "$PROGNAME:"
-				  echo -n " Invalid rate \"$bitrate\","
-				  echo " defaulting to $dflt_bitrate"
-				  bitrate=$dflt_bitrate
-				fi
-				;;
+		(*)
+			echo
+			echo "$PROGNAME: Invalid parameter given: \"$arg\""
+			help
+			exit 10
+			;;
 		esac
-		;;
-
-	(--vkeep)
-		delete_video=0
-		;;
-
-	(--${alt_conv})
-		avconv=$alt_conv
-		;;
-
-	(--*)
+	done
+	if [ $have_url -eq 0 ]; then
 		echo
-		echo "$PROGNAME: Invalid option given: \"$arg\""
+		echo "$PROGNAME: ERROR: url required"
 		help
-		exit -3
-		;;
-
-	(*)
-		echo
-		echo "$PROGNAME: Invalid parameter given: \"$arg\""
-		help
-		exit 10
-		;;
-	esac
-  done
-
-  if [ $have_url -eq 0 ]; then
-	echo
-	echo "$PROGNAME: ERROR: url required"
-	help
-	exit 1
-  fi
-else
-	interactive=1
-	bitrate=0
-	address="please-supply-an-address"
-
-	${windows}_address
-	${windows}_dir
-	${windows}_bitrate
-	${windows}_keepvideo
-fi
-
-# youtube urls have 'v=' followed by a unique id
-
-regex='v=(.*)'
-if [[ $address =~ $regex ]]; then
-	get_video_convert_extract ${BASH_REMATCH[1]}
-
-	if [ $interactive -gt 0 ]; then
-		${windows}_mp3ready
-	else
-		echo
-		echo "$PROGNAME: Done."
-		echo
+		exit 1
 	fi
-else
-	err="Invalid YouTube URL: please correct and retry ..."
+}
 
-	if [ $interactive -gt 0 ]; then
-		${windows}_error
+function parseVideoId {
+	#  Example address: http://www.youtube.com/watch?v=S4v-_p5dU34&feature=share&list=RD02t2015S3A-lg&index=1
+	#  We're only interested in the "v=S4v-_p..." part.
+
+	# Normalize delimiters to whitespace:
+	local address=$(echo "$1" | tr '?' ' ' | tr '&' ' ')
+
+
+	# Parse the address to extract "v=..."
+	local vx
+	read junk1 vx junk2 <<< "$address"
+
+	# Parse the vx to get just the ID:
+	IFS="=" read junk1 vx <<< "$vx"
+
+	echo "$vx"
+}
+
+if [[ -z $sourceMe ]]; then
+	var_title="YouTube MP3 Extractor"
+
+
+	# Check env for use Gnome (zenity) or Kde (kdialog)
+	# Info here:
+	#             http://enzotib.blogspot.com.es/
+	#             http://askubuntu.com/questions/72549/determine-what-window-manager-or-desktop-is-running
+	if [ "$DESKTOP_SESSION" = "kde-plasma" ]; then
+		windows=kdialog
 	else
-		echo "$PROGNAME: $err"
+		windows=zenity
+	fi
+
+	# avconv is a replacement for ffmpeg
+	# I default to avconv simply because my main distros are
+	# ubuntu-based, and these distros have moved to avconv.
+	#
+	# If you prefer ffmpeg to be the default then just change the if test
+	if [ 1 -eq 1 ]; then
+		dflt_conv=ffmpeg
+		alt_conv=avconv
+	else
+		dflt_conv=avconv
+		alt_conv=ffmpeg
+	fi
+	avconv=${dflt_conv}
+
+	dnload="youtube-dl"
+	audenc=lame
+
+	if [ $# -gt 0 ]; then
+		parseArgs "$@"
+
+	else
+		interactive=1
+		bitrate=0
+		address="please-supply-an-address"
+
+		${windows}_address
+		${windows}_dir
+		${windows}_bitrate
+		${windows}_keepvideo
+	fi
+
+	videoId=$(parseVideoId "$address")
+	# youtube urls have 'v=' followed by a unique id
+
+	if [[ ! -z $videoId ]]; then
+		get_video_convert_extract "$videoId" "$address"
+
+		if [ $interactive -gt 0 ]; then
+			${windows}_mp3ready
+		else
+			echo
+			echo "$PROGNAME: Done."
+			echo
+		fi
+	else
+		err="Invalid YouTube URL: please correct and retry ..."
+
+		if [ $interactive -gt 0 ]; then
+			${windows}_error
+		else
+			echo "$PROGNAME: $err"
+		fi
 	fi
 fi
