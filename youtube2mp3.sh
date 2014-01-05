@@ -218,6 +218,25 @@ function get_video_convert_extract
 	fi
 }
 
+
+function checkPrerequisites {
+	# Verify that we have the tools we need to succeed:
+	
+	local errStd="Please run setup-prereqs.sh to prepare the environment and tools for this script."
+
+	local execList="$avconv $audenc $windows"
+
+	for app in $execList; do
+		if ! which $app &>/dev/null; then
+			echo "ERROR: Can't find required program \"$app\"" >&2
+			echo "    $errStd" >&2
+			exit 1
+		fi
+	done
+
+
+}
+
 function parseArgs {
 	# default is to delete the downloaded video file
 	delete_video=1
@@ -301,19 +320,28 @@ function parseArgs {
 }
 
 function parseVideoId {
-	#  Example address: http://www.youtube.com/watch?v=S4v-_p5dU34&feature=share&list=RD02t2015S3A-lg&index=1
-	#  We're only interested in the "v=S4v-_p..." part.
+	#  Example addresses
+	#     1. Old style: http://www.youtube.com/watch?v=S4v-_p5dU34&feature=share&list=RD02t2015S3A-lg&index=1
+	#     2. New style: http://youtu.be/5QuGiMAEqE8
+	#  We're only interested in the video-identification part.
 
-	# Normalize delimiters to whitespace:
-	local address=$(echo "$1" | tr '?' ' ' | tr '&' ' ')
+	local rawaddr="$1"
+	local address=""
+	if [[ "$rawaddr" == *watch* ]]; then # Detect old-style link:
+		# Normalize delimiters to whitespace:
+		address=$(echo "$rawaddr" | tr '?' ' ' | tr '&' ' ')
 
 
-	# Parse the address to extract "v=..."
-	local vx
-	read junk1 vx junk2 <<< "$address"
+		# Parse the address to extract "v=..."
+		local vx
+		read junk1 vx junk2 <<< "$address"
 
-	# Parse the vx to get just the ID:
-	IFS="=" read junk1 vx <<< "$vx"
+		# Parse the vx to get just the ID:
+		IFS="=" read junk1 vx <<< "$vx"
+	else
+		# Presume new-style link:
+		local vx=$(echo "$rawaddr" | tr '/' ' ' | awk '{print $NF}' )
+	fi
 
 	echo "$vx"
 }
@@ -363,10 +391,13 @@ if [[ -z $sourceMe ]]; then
 		${windows}_keepvideo
 	fi
 
+	checkPrerequisites
+
 	videoId=$(parseVideoId "$address")
 	# youtube urls have 'v=' followed by a unique id
 
 	if [[ ! -z $videoId ]]; then
+
 		get_video_convert_extract "$videoId" "$address"
 
 		if [ $interactive -gt 0 ]; then

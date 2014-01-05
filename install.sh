@@ -18,20 +18,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 if [ ! -d "/usr/share/icons/gnome/scalable/apps/" ]; then
-mkdir /usr/share/icons/gnome/scalable/apps/
+	mkdir /usr/share/icons/gnome/scalable/apps/
 fi
 if [ ! -d "/opt/youtube2mp3/" ]; then
-mkdir /opt/youtube2mp3/
+	mkdir /opt/youtube2mp3/
 fi
 
 if [ -e "/usr/share/icons/gnome/scalable/apps/youtube.png" ]; then
-rm /usr/share/icons/gnome/scalable/apps/youtube.png
+	rm /usr/share/icons/gnome/scalable/apps/youtube.png
 fi
 if [ -e "/opt/youtube2mp3/youtube2mp3.sh" ]; then
-rm /opt/youtube2mp3/youtube2mp3.sh
+	rm /opt/youtube2mp3/youtube2mp3.sh
 fi
 if [ -e "/usr/share/applications/YouTube\ Downloader.desktop" ]; then
-rm /usr/share/applications/YouTube\ Downloader.desktop
+	rm /usr/share/applications/YouTube\ Downloader.desktop
 fi
 
 cp ./img/youtube.png /usr/share/icons/gnome/scalable/apps/
