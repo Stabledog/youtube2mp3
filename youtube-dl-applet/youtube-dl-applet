@@ -1,0 +1,266 @@
+#!/bin/bash
+
+# Copyright (C) 2014 Nikita Zlobin <nick87720z@gmail.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# shopt -s lastpipe
+
+confdir="$HOME/.config/youtube-dl-applet"
+wdfile="$confdir/last-dir"
+termfile="$confdir/term"
+toolsfile="$confdir/tools"
+
+cmd_list_gelp="\
+## Each line - command, used for download.
+## Commands are probed begining from first.
+## Uncomment some lines (remove begining #) to enable this feature.
+## If multiple lines are uncommented, they are probed before first success."
+
+toolsfile_def="$cmd_list_gelp"'
+## Variables (no need for quatation marks):
+##  $src - download source, discovered by youtube-dl
+##  $dest - where to save (if required)
+##  $agent - user agent, recommended by youtube-dl
+
+## KDE copy function, displays progress in tray with good job control support
+# kde-cp $src $dest
+
+## Very popular download manager
+# kget $src'
+
+termfile_def="$cmd_list_gelp"'
+# konsole --hold
+# urxvt -hold
+# xterm -hold'
+
+help_msg="\
+<b>Getting started</b><br>
+• Drag link to page, containing video, from browser to icon<br>
+• To interrupt download close progress dialog<br>
+<i>(if you don't use neither external tool nor terminal emulator)</i><br>
+<br>
+<b>Backend selection order</b><br>
+1. External tool<br>
+2. youtube-dl in terminal emulator<br>
+3. youtube-dl with progress dialog<br>
+<br>
+<b>Configuration files</b><br>
+• External tools selection:<br>
+<a href=\"file://$toolsfile/\">$toolsfile</a><br>
+• Terminal emulator selection:<br>
+<a href=\"$termfile\">$termfile</a><br>
+• Last used directory:<br>
+<a href=\"$wdfile\">$wdfile</a><br>
+<br>
+<i>See README for more defails</i>"
+
+dummyout=/dev/null
+
+# Loading configuration
+toolsfile_def=$( { cat "$toolsfile" || { tee "$toolsfile" <<< "$toolsfile_def"; }; } | grep -v '^#' | grep -E '^.+$' | nl -s':' -w1 )
+termfile_def=$(  { cat "$termfile"  || { tee "$termfile"  <<< "$termfile_def";  }; } | grep -v '^#' | grep -E '^.+$' | nl -s':' -w1 )
+workdir=$(       { cat "$wdfile"    || { tee "$wdfile"    <<< "$workdir";       }; } )
+
+# On first start confdir must be created
+[ -d "$confdir" ] || mkdir -p "$confdir"
+
+# If no arguments specified, display message usage help.
+# TODO: Implement maintainance mode (configuration)
+[ -z "$@" ] && {
+  kdialog --title="Help" --msgbox "$help_msg"
+  exit
+}
+url="$1"
+
+# Try to find youtube-dl
+cmd="youtube-dl"
+[ -z $( which youtube-dl ) ] && {
+  cmd=$( kdialog --title="youtube-dl not found" --getopenfilename / )
+  [ -x "$cmd" ] || exit
+}
+cmd+=" $url"
+
+# Loading tools probe order
+
+cmd_probe ()
+{
+  local lines="$1"
+
+  [ "$lines" ] && {
+    lcount=$( wc -l <<< "$lines" )
+    lnum=1
+    while (( lnum <= lcount ))
+    do
+      line=$( grep -E "^$lnum:" <<< "$lines" | cut -d':' -f2- )
+      exe=$( cut -d' ' -f1 <<< $line )
+      ( which $exe > $dummyout ) || [ -e "$exe" ] && {
+        echo "$line"
+        return
+      }
+      (( lnum ++ ))
+    done
+  }
+}
+
+# Probing download tool (if not specified - youtube-dl will be used in most usual way)
+downman=$( cmd_probe "$toolsfile_def" )
+
+# Ask working directory, proposing last used by default.
+# If directory is read-only - ask again and again, until canceled.
+
+[ -z "$downman" ] || (grep -F '$dest' <<< "$downman" > $dummyout) && {
+  title="Where to save?"
+  while :; do
+    workdir=$( kdialog --title "$title" --getexistingdirectory "$workdir" )
+
+    [ -z "$workdir" ] && exit || \
+    [ -w "$workdir" ] && cd "$workdir" && echo "$workdir" > "$wdfile" && break
+
+    title="No write permission. Where to save?"
+  done
+}
+
+# Building formats menu (only for multiple options)
+formats=$(
+  shopt -s -o pipefail
+  { $cmd -F 3>&2 2>&1 1>&3 | kdialog --error "$(cat)" 2>&1 > /dev/null; } 2>&1
+) || exit
+
+formats_line=$(( $( grep -En "^format code " <<< "$formats" | cut -d':' -f1 ) + 1 ))
+formats=$( tail -n+$formats_line <<< "$formats" | tr -s ' ' | nl -s':' -w1 )
+
+echo -e "formats:\n$formats\n>>>>>"
+
+lcount=$( wc -l <<< "$formats" )
+(( lcount > 1 )) && {
+  menu_cmd="kdialog --menu \"Select format\" \"all\" \"All formats\""
+  lnum=1
+  while (( lnum <= lcount ))
+  do
+    line=$( grep -E "^$lnum:" <<< "$formats" )
+    opt=$( cut -d' ' -f1 <<< "$line" | cut -d':' -f2 )
+    text=$( cut -d' ' -f2- <<< "$line" )
+    menu_cmd+=" \"$opt\" \"$text\""
+    (( lnum ++ ))
+  done
+
+  choise=$( eval $menu_cmd )
+  [ -z "$choise" ] && exit || \
+  [ "$choise" = "all" ] && cmd+=" --all-formats" || \
+  cmd+=" -f $choise"
+}; exit
+
+# Implementing DEBUG environment variable
+[ "$DEBUG" = "yes" ] && cmd="echo $cmd"
+
+# Finally, download attempt
+[ "$downman" ] && {
+  downman_args=$( $cmd --get-url --get-filename )
+  src=\"$( grep -E '^http://' <<< "$downman_args" )\"
+  dest=\"$( grep -vE '^http://' <<< "$downman_args" )\"
+  agent=\"$( youtube-dl --dump-user-agent )\"
+
+  grep -F '$src' <<< "$downman" > $dummyout || downman+=" \$src"
+  eval $( eval echo "$downman" ) > $dummyout || \
+    kdialog --error "Error running "$( cut -d' ' -f1 <<< "$downman" )
+} || {
+  # Probing terminal emulator
+  term=$( cmd_probe "$termfile_def" )
+
+  # Terminal emulator is necessary only to see some more feedback, than completion notification.
+  # Warning is optional and may be disabled by user.
+  [ "$term" ] && $term -e bash -c "cd $PWD; $cmd" || \
+  {
+    cmd+=" --newline"
+    status="Downloading video from <a href=\"$url\">$url</a><br>"
+    progr_link=$( kdialog --progressbar "$status" )
+    progr_serv=$( cut -d' ' -f1 <<< "$progr_link" )
+    progr_path=$( cut -d' ' -f2 <<< "$progr_link" )
+    qdbus_cmd="qdbus $progr_serv $progr_path org.kde.kdialog.ProgressDialog"
+
+    # workaround: By inknown reason dialog process ID is higher than in dbus serivce name
+    gui_pid=$(( $( cut -d'-' -f2 <<< "$progr_serv" ) + 1 ))
+
+    # Just for reference:
+    # status message format: [download]   0.0% of 564.01MiB at  3.59MiB/s ETA 02:37
+    # org.kde.kdialog-24863 /ProgressDialog
+
+    # Loop defaults
+    end_rez="Dismissed"
+    stat="W"
+
+    coproc $cmd
+    cmd_pid=$COPROC_PID
+    cmd_out=${COPROC[0]}
+    while read -u $cmd_out -a msg ; do
+      # If user closed dialog
+      ps --pid $gui_pid > $dummyout || {
+        echo "Progress dialog process disappeared"
+        kill $cmd_pid
+        end_rez="Interrupted"
+        continue
+      }
+
+      # First message about progress
+      [ ! stat = "D" ] && \
+      if { [ "${msg[0]}" = "[download]" ] && [ "${msg[2]}" = "of" ] && [ "${msg[4]}" = "at" ] && [ "${msg[6]}" = "ETA" ]; }
+      then
+        end_rez="Completed"
+        stat="D"
+      else
+        [ "$progr_text" = "${msg[*]}" ] || {
+          progr_text="${msg[*]}"
+          $qdbus_cmd.setLabelText "$( echo $status; cut -d' ' -f2- <<< $progr_text )" > $dummyout
+        }
+        continue
+      fi
+      # [ "$stat" = "D" ] ||
+
+      # Unexpected message, assuming due to error
+      [ "${msg[0]}" = "[download]" ] && [ "${msg[2]}" = "of" ] && [ "${msg[4]}" = "at" ] && [ "${msg[6]}" = "ETA" ] || {
+        end_rez="Failed"
+        continue
+      }
+
+      progr_text="$status \
+      <TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=0>
+        <COL WIDTH=85*>
+        <COL WIDTH=85*>
+        <COL WIDTH=85*>
+        <TR VALIGN=TOP>
+                <TD WIDTH=33% STYLE=\"border: none; padding: 0cm\">
+                        <P><b>size:</b> ${msg[3]}</P>
+                </TD>
+                <TD WIDTH=33% STYLE=\"border: none; padding: 0cm\">
+                        <P><b>speed:</b> ${msg[5]}</P>
+                </TD>
+                <TD WIDTH=33% STYLE=\"border: none; padding: 0cm\">
+                        <P><b>time:</b> ${msg[7]}</P>
+                </TD>
+        </TR>
+      </TABLE>"
+      $qdbus_cmd.value $( cut -d'.' -f1 <<< "${msg[1]}" | tr -d '%' ) > $dummyout
+      $qdbus_cmd.setLabelText "$progr_text" > $dummyout
+    done
+
+    [ "$stat" = "D" ] && {
+      progr_text=$( echo -e "$status\n$end_rez" )
+      $qdbus_cmd.setLabelText "$progr_text" > $dummyout
+
+      popup_text="$end_rez download\n$url"
+    } || popup_text="$end_rez download\n$progr_text"
+    kdialog --passivepopup "$popup_text" 0 &
+  }
+}

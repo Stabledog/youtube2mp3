@@ -1,0 +1,59 @@
+TODO
+- Integration with KDE KIO job control. May need another big refactoring, probably using other language.
+
+Version 1.4.2
+- Fixed formats list parser - now works not only with youtube
+- Last element in formats list was not shown
+
+Version 1.4.1
+- Show url's as url's in all dialogs
+- regression: Download formats menu did not appear
+
+Version 1.4
+- Show error text and cancel if youtube-dl produced error on first usage attempt
+- Formated text in progress dialog
+
+Version 1.3.1
+- regression: Did not remember last used directory
+
+Version 1.3
+- Code refactoring
+- Added support for external download tools
+- Added progress dialog for terminal-less mode
+- Terminal emulator is disabled by default for progress dialog
+- Support for comments and empty lines in files with variants for probing
+- Updated readme, extended startup help text
+- Create or load non-existing configuration files even without any work
+
+Version 1.2.2
+- Added formats menu (auto-detection of best format by youtube-dl is not so perfect yet)
+- Changed script backend shell to bash
+- In some cases real working dir in terminal emulator was not same as in $PWD variable
+- Write default term file if not found
+- Extending term config file role: accept list of terminal emulators, probed begining from first
+- Finally fixed DEBUG implementation code
+- Set console title for terminal with runing youtube-dl
+- Questionable usefulness of url list entry text box. Display usage help instead.
+- Use desktop notification system in progress-less mode
+- Typo in code comments
+
+Version 1.2.1
+- Wrong code in DEBUG mode, causing it to be always enabled
+
+Version 1.2
+- Added debug mode (use environment variable DEBUG=yes)
+Bugfixes:
+- In first start could not save configs because did not create config dir
+- Did not use urls list from text box when started without arguments
+
+Version 1.1.1
+- Added copyright info
+
+Version 1.1
+- Added copying information to package;
+- Changed layout of config files: now all files are in ~/.config/youtube-dl-applet
+- Trying to find youtube-dl, if failed - ask user to select it
+- Some comments in code, mostly for markup
+- Info in readme, how to specify terminal
+
+Version 1.0: Initial release

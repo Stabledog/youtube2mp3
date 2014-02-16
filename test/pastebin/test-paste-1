@@ -1,0 +1,8 @@
+#!/bin/bash
+
+key=$(cat $HOME/.pastebin-api-key)
+
+
+if [[ -z $sourceMe ]]; then
+	curl -s -X POST	-d "hello_world" "http://pastebin.com/api"
+fi

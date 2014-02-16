@@ -1,0 +1,19 @@
+[Desktop Entry]
+Comment[ru]=Drag links to icon
+Comment=Drag links to icon
+Exec=youtube-dl-applet %U
+GenericName[ru]=Tube Video Grabber
+GenericName=Tube Video Grabber
+Icon=download
+MimeType=
+Name[ru]=youtube-dl
+Name=youtube-dl
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=\s--noclose
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=none
+X-KDE-SubstituteUID=false
+X-KDE-Username=

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cp ./youtube-dl-applet "$DESTDIR/usr/bin/"
+cp ./youtube-dl-applet.desktop "$DESTDIR/usr/share/applications/"
+

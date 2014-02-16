@@ -1,0 +1,480 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Pastebin.com - Developers API</title>
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link href="/i/main.css" rel="stylesheet" type="text/css" />
+				
+		<script type="text/javascript" src="/js/jquery.js"></script>
+		<script type="text/javascript" src="/js/main_v1.js"></script>
+		<meta property="fb:app_id" content="231493360234820" />
+		<meta property="og:title" content="Pastebin.com - Developers API" />
+		<meta property="og:type" content="article" />
+	    <meta property="og:url" content="http://pastebin.com/api" />
+	    <meta property="og:image" content="http://pastebin.com/i/fb2.jpg" />
+	    <meta property="og:site_name" content="Pastebin" />
+		<meta name="google-site-verification" content="jkUAIOE8owUXu8UXIhRLB9oHJsWBfOgJbZzncqHoF4A" />
+		<link rel="canonical" href="http://pastebin.com/api" />
+				<!--[if SafMob]>
+			<style>body{-webkit-text-size-adjust:none;}</style>
+		<![endif]-->
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-58643-34']);
+		  _gaq.push(['_trackPageview']);
+			setTimeout("_gaq.push(['_trackEvent', '15_seconds', 'read'])", 15000);
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	</head>
+	<body>
+	<div id="super_frame">
+		<div id="logo" onclick="location.href='/'" title="Create New Paste"></div>
+		<div id="header">
+			<div id="header_top">
+				<span class="span_left more">PASTEBIN</span><span class="span_left less"> &nbsp;|&nbsp; #1 paste tool since 2002</span><span class="min_max_span narrow_it" title="Change layout width"></span><span class="min_max_span wide_it" style="display:none" title="Change layout width"></span>				<ul class="top_menu">
+					<li class="no_border_li"><a href="/" accesskey="n">create new paste</a></li><li><a href="/tools">tools</a></li><li><a href="/api">api</a></li><li><a href="/archive">archive</a></li><li><a href="/faq">faq</a></li>
+				</ul>
+			</div>
+			<div id="header_middle">
+				<span class="span_left big"><a href="/">PASTEBIN</a></span> 
+				<a href="http://twitter.com/pastebin" target="_blank"><img src="/i/t.gif" alt="" class="i_tf" width="122" height="20" border="0" /></a>	<iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2Fpastebin&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=segoe+ui&amp;height=21&amp;appId=231493360234820" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;margin:13px 0 0 10px;vertical-align:top" allowTransparency="true"></iframe>
+				<div id="header_middle_search">
+					<form class="search_form" name="search_form" method="get" action="/search" id="cse-search-box">
+					    <input type="hidden" name="cx" value="partner-pub-7089230323117142:2864958357" />
+					    <input type="hidden" name="cof" value="FORID:10" />
+					    <input type="hidden" name="ie" value="UTF-8" />
+						<input class="search_input" type="text" name="q" size="5" value="" placeholder="search..." x-webkit-speech/><input name="sa" class="search_button" src="/i/t.gif" alt="Search..." type="image" value="Search" />
+					</form>
+				</div>					
+			</div>
+			<div id="header_bottom">
+				<div class="div_top_menu">
+					<img src="/i/t.gif" class="i_n" width="16" height="16" alt="" border="0" /> <a href="/">create new paste</a> 
+					&nbsp;&nbsp;&nbsp; <img src="/i/t.gif" class="i_t" width="16" height="16" alt="" border="0" /> <a href="/trends">trending pastes</a>
+				</div>
+				<ul class="top_menu">
+					<li class="no_border_li"><a href="/signup">sign up</a></li><li><a href="/login">login</a></li><li><a href="/alerts">my alerts</a></li><li><a href="/settings">my settings</a></li><li><a href="/profile">my profile</a></li>				</ul>		
+			</div>			
+		</div>
+
+			<div class="frame_spacer"><!-- --></div>
+			<div style="height:35px;line-height:35px;font-size:0.85em;"><img src="/i/tip.png" width="16" height="16" style="vertical-align:middle;margin:-6px 0 0 2px" alt="" /> Pastebin launched a little side project called <a href="http://hostcabi.net/" target="_blank">HostCabi.net</a>, check it out ;-)<span style="float:right;text-align:right;">Don't like ads? <a href="/pro">PRO users</a> don't see any ads ;-)</span></div>		<div class="frame_spacer"><!-- --></div>
+		<div id="monster_frame">
+			<div id="content_frame">
+				<div id="content_right">
+										<div class="content_right_menu">
+									<div class="content_right_title"><a href="/archive">Public Pastes</a></div>	
+									<div id="menu_2">
+										<ul class="right_menu"><li><a href="/EUbL6iYs">Untitled</a><span>4 sec ago</span></li><li><a href="/6CGjErgK">B-Tree</a><span>C | 5 sec ago</span></li><li><a href="/8MpSuBtu">Untitled</a><span>6 sec ago</span></li><li><a href="/qjrpnTQh">Error Log report</a><span>11 sec ago</span></li><li><a href="/yWC89b2G">Untitled</a><span>22 sec ago</span></li><li><a href="/BHhAB1by">Untitled</a><span>45 sec ago</span></li><li><a href="/RNuyxkwf">Untitled</a><span>26 sec ago</span></li><li><a href="/hCEhr7ap">Untitled</a><span>26 sec ago</span></li></ul></div></div>										
+				<div style="padding: 0; width:300px;height:260px;clear:left;">
+					<iframe src="/adserver/300x250_tribal_safe.html" width="300" height="250" scrolling="no" frameborder="0" name="ad3"></iframe>
+				</div>
+			<div style="padding: 0; width:300px;height:260px;clear:left;">
+				<iframe src="/adserver/300x250_us.php" width="300" height="250" scrolling="no" frameborder="0" name="ad4"></iframe>
+			</div>					<div id="steadfast" title="Pastebin is proudly hosted by Steadfast.net" onclick="location.href='http://steadfast.net/'"></div>
+				</div>
+				<div id="content_left">
+
+				<div class="banner_728">
+					<iframe src="/adserver/728x90_tribal_safe.html" width="728" height="90" scrolling="no" frameborder="0" name="ad2"></iframe>
+				</div>
+				<div class="layout_clear"></div>
+	<div class="content_title">Developers API</div>	
+	<div class="content_text">
+		This is the Pastebin.com developers API documentation page. Here you can find all the information you need to get started with our API. If you have questions, feel free to <a href="/contact">contact us</a>. If you are a developer, and you are building something for Pastebin which might benefit others as well, be sure to contact us, as we might be able to feature your creation on our <a href="/tools">tools page</a>.
+	
+		<div style="margin: 8px 0 0 30px">
+			1. <a href="/api#1">Your Unique Developer API Key</a><br />
+			2. <a href="/api#2">Creating A New Paste</a><br />
+			3. <a href="/api#3">Creating A New Paste, [Required Parameters]</a><br />
+			4. <a href="/api#4">Creating A New Paste, [Optional Parameters]</a><br />
+			5. <a href="/api#5">Creating A New Paste, The 'api_paste_format' Paramater In Detail</a><br />
+			6. <a href="/api#6">Creating A New Paste, The 'api_paste_expire_date' Paramater In Detail</a><br />
+			7. <a href="/api#7">Creating A New Paste, The 'api_paste_private' Paramater In Detail</a><br />
+			8. <a href="/api#8">Creating An 'api_user_key' Using The API Member Login System</a><br />
+			9. <a href="/api#9">Listing Pastes Created By A User</a><br />
+			10. <a href="/api#10">Listing Trending Pastes</a><br />
+			11. <a href="/api#11">Deleting A Paste Created By A User</a><br />
+			12. <a href="/api#12">Getting A Users Information And Settings</a><br />
+			13. <a href="/api#13">Getting paste raw output</a><br />
+		</div>
+	</div>
+	<a name="1"></a>
+		<div class="content_sub_title">Your Unique Developer API Key</div>
+		<div class="content_text">
+			Everybody using our API is required to use a valid Developer API Key. You automatically get a key when you become a member of Pastebin.
+		
+		 Please login to your account, and return to this page to find your Developer API Key.
+		</div>
+
+<a name="2"></a>
+<div class="content_sub_title">Creating A New Paste</div>
+<div class="content_text">
+	Creating a new paste via our API is very easy. You simply have to send a valid POST request to the URL shown below. Please make sure you are sending the data as the <b>UTF-8 charset</b>!
+	<div class="code_box">http://pastebin.com/api/api_post.php</div>
+	Below is a PHP example using cURL how to create a new paste:
+	<div class="code_box" style="overflow:scroll">$api_dev_key 			= 'YOUR API DEVELOPER KEY'; // your api_developer_key
+$api_paste_code 		= 'just some random text you :)'; // your paste text
+$api_paste_private 		= '1'; // 0=public 1=unlisted 2=private
+$api_paste_name			= 'justmyfilename.php'; // name or title of your paste
+$api_paste_expire_date 		= '10M';
+$api_paste_format 		= 'php';
+$api_user_key 			= ''; // if an invalid api_user_key or no key is used, the paste will be create as a guest
+$api_paste_name			= urlencode($api_paste_name);
+$api_paste_code			= urlencode($api_paste_code);
+
+
+$url 				= 'http://pastebin.com/api/api_post.php';
+$ch 				= curl_init($url);
+
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, 'api_option=paste&api_user_key='.$api_user_key.'&api_paste_private='.$api_paste_private.'&api_paste_name='.$api_paste_name.'&api_paste_expire_date='.$api_paste_expire_date.'&api_paste_format='.$api_paste_format.'&api_dev_key='.$api_dev_key.'&api_paste_code='.$api_paste_code.'');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_VERBOSE, 1);
+curl_setopt($ch, CURLOPT_NOBODY, 0);
+
+$response  			= curl_exec($ch);
+echo $response;</div>
+	Possible Good API Responses: (example)
+	<div class="code_box" style="overflow:scroll">http://pastebin.com/UIFdu235s</div>
+	Possible Bad API Responses:
+	<div class="code_box" style="overflow:scroll">Bad API request, invalid api_option
+Bad API request, invalid api_dev_key
+Bad API request, IP blocked
+Bad API request, maximum number of 25 unlisted pastes for your free account
+Bad API request, maximum number of 10 private pastes for your free account
+Bad API request, api_paste_code was empty
+Bad API request, maximum paste file size exceeded
+Bad API request, invalid api_expire_date
+Bad API request, invalid api_paste_private
+Bad API request, invalid api_paste_format</div>
+</div>
+<a name="3"></a>
+<div class="content_sub_title">Creating A New Paste, [Required Parameters]</div>
+<div class="content_text">
+	Include all the following <b>POST</b> parameters when you request the URL:<br /><br />
+	1. <b>api_dev_key</b> - which is your unique API Developers Key.<br />
+	2. <b>api_option</b> - set as 'paste', this will indicate you want to create a new paste.<br />
+	3. <b>api_paste_code</b> - this is the text that will be written inside your paste.<br /><br />
+	Leaving any of these parameters out will result in an error.
+</div>
+<a name="4"></a>
+<div class="content_sub_title">Creating A New Paste, [Optional Parameters]</div>
+<div class="content_text">
+	These parameters are not required when you create a new paste, but are possible to add:<br /><br />
+	1. <b>api_user_key</b> - this paramater is part of the login system, which is explained further down the page.<br />
+	2. <b>api_paste_name</b> - this will be the name / title of your paste.<br />
+	3. <b>api_paste_format</b> - this will be the syntax highlighting value, which is explained in detail further down the page.<br />
+	4. <b>api_paste_private</b> - this makes a paste public or private, public = 0, unlisted = 1, private = 2<br />
+	5. <b>api_paste_expire_date</b> - this sets the expiration date of your paste, the values are explained futher down the page.
+</div>
+<a name="5"></a>
+<div class="content_sub_title">Creating A New Paste, The 'api_paste_format' Paramater In Detail</div>
+<div class="content_text">
+	We have over 200 syntax highlighting options available, below you can find a list of all the possible values you can use in combination with 'api_paste_format'. Always include the value on the left from the list below, the value on the right is just the full name of the language in question.<br />&nbsp;&nbsp;&nbsp;&nbsp;4cs = 4CS<br />&nbsp;&nbsp;&nbsp;&nbsp;6502acme = 6502 ACME Cross Assembler<br />&nbsp;&nbsp;&nbsp;&nbsp;6502kickass = 6502 Kick Assembler<br />&nbsp;&nbsp;&nbsp;&nbsp;6502tasm = 6502 TASM/64TASS<br />&nbsp;&nbsp;&nbsp;&nbsp;abap = ABAP<br />&nbsp;&nbsp;&nbsp;&nbsp;actionscript = ActionScript<br />&nbsp;&nbsp;&nbsp;&nbsp;actionscript3 = ActionScript 3<br />&nbsp;&nbsp;&nbsp;&nbsp;ada = Ada<br />&nbsp;&nbsp;&nbsp;&nbsp;algol68 = ALGOL 68<br />&nbsp;&nbsp;&nbsp;&nbsp;apache = Apache Log<br />&nbsp;&nbsp;&nbsp;&nbsp;applescript = AppleScript<br />&nbsp;&nbsp;&nbsp;&nbsp;apt_sources = APT Sources<br />&nbsp;&nbsp;&nbsp;&nbsp;arm = ARM<br />&nbsp;&nbsp;&nbsp;&nbsp;asm = ASM (NASM)<br />&nbsp;&nbsp;&nbsp;&nbsp;asp = ASP<br />&nbsp;&nbsp;&nbsp;&nbsp;asymptote = Asymptote<br />&nbsp;&nbsp;&nbsp;&nbsp;autoconf = autoconf<br />&nbsp;&nbsp;&nbsp;&nbsp;autohotkey = Autohotkey<br />&nbsp;&nbsp;&nbsp;&nbsp;autoit = AutoIt<br />&nbsp;&nbsp;&nbsp;&nbsp;avisynth = Avisynth<br />&nbsp;&nbsp;&nbsp;&nbsp;awk = Awk<br />&nbsp;&nbsp;&nbsp;&nbsp;bascomavr = BASCOM AVR<br />&nbsp;&nbsp;&nbsp;&nbsp;bash = Bash<br />&nbsp;&nbsp;&nbsp;&nbsp;basic4gl = Basic4GL<br />&nbsp;&nbsp;&nbsp;&nbsp;bibtex = BibTeX<br />&nbsp;&nbsp;&nbsp;&nbsp;blitzbasic = Blitz Basic<br />&nbsp;&nbsp;&nbsp;&nbsp;bnf = BNF<br />&nbsp;&nbsp;&nbsp;&nbsp;boo = BOO<br />&nbsp;&nbsp;&nbsp;&nbsp;bf = BrainFuck<br />&nbsp;&nbsp;&nbsp;&nbsp;c = C<br />&nbsp;&nbsp;&nbsp;&nbsp;c_mac = C for Macs<br />&nbsp;&nbsp;&nbsp;&nbsp;cil = C Intermediate Language<br />&nbsp;&nbsp;&nbsp;&nbsp;csharp = C#<br />&nbsp;&nbsp;&nbsp;&nbsp;cpp = C++<br />&nbsp;&nbsp;&nbsp;&nbsp;cpp-qt = C++ (with QT extensions)<br />&nbsp;&nbsp;&nbsp;&nbsp;c_loadrunner = C: Loadrunner<br />&nbsp;&nbsp;&nbsp;&nbsp;caddcl = CAD DCL<br />&nbsp;&nbsp;&nbsp;&nbsp;cadlisp = CAD Lisp<br />&nbsp;&nbsp;&nbsp;&nbsp;cfdg = CFDG<br />&nbsp;&nbsp;&nbsp;&nbsp;chaiscript = ChaiScript<br />&nbsp;&nbsp;&nbsp;&nbsp;clojure = Clojure<br />&nbsp;&nbsp;&nbsp;&nbsp;klonec = Clone C<br />&nbsp;&nbsp;&nbsp;&nbsp;klonecpp = Clone C++<br />&nbsp;&nbsp;&nbsp;&nbsp;cmake = CMake<br />&nbsp;&nbsp;&nbsp;&nbsp;cobol = COBOL<br />&nbsp;&nbsp;&nbsp;&nbsp;coffeescript = CoffeeScript<br />&nbsp;&nbsp;&nbsp;&nbsp;cfm = ColdFusion<br />&nbsp;&nbsp;&nbsp;&nbsp;css = CSS<br />&nbsp;&nbsp;&nbsp;&nbsp;cuesheet = Cuesheet<br />&nbsp;&nbsp;&nbsp;&nbsp;d = D<br />&nbsp;&nbsp;&nbsp;&nbsp;dcl = DCL<br />&nbsp;&nbsp;&nbsp;&nbsp;dcpu16 = DCPU-16<br />&nbsp;&nbsp;&nbsp;&nbsp;dcs = DCS<br />&nbsp;&nbsp;&nbsp;&nbsp;delphi = Delphi<br />&nbsp;&nbsp;&nbsp;&nbsp;oxygene = Delphi Prism (Oxygene)<br />&nbsp;&nbsp;&nbsp;&nbsp;diff = Diff<br />&nbsp;&nbsp;&nbsp;&nbsp;div = DIV<br />&nbsp;&nbsp;&nbsp;&nbsp;dos = DOS<br />&nbsp;&nbsp;&nbsp;&nbsp;dot = DOT<br />&nbsp;&nbsp;&nbsp;&nbsp;e = E<br />&nbsp;&nbsp;&nbsp;&nbsp;ecmascript = ECMAScript<br />&nbsp;&nbsp;&nbsp;&nbsp;eiffel = Eiffel<br />&nbsp;&nbsp;&nbsp;&nbsp;email = Email<br />&nbsp;&nbsp;&nbsp;&nbsp;epc = EPC<br />&nbsp;&nbsp;&nbsp;&nbsp;erlang = Erlang<br />&nbsp;&nbsp;&nbsp;&nbsp;fsharp = F#<br />&nbsp;&nbsp;&nbsp;&nbsp;falcon = Falcon<br />&nbsp;&nbsp;&nbsp;&nbsp;fo = FO Language<br />&nbsp;&nbsp;&nbsp;&nbsp;f1 = Formula One<br />&nbsp;&nbsp;&nbsp;&nbsp;fortran = Fortran<br />&nbsp;&nbsp;&nbsp;&nbsp;freebasic = FreeBasic<br />&nbsp;&nbsp;&nbsp;&nbsp;freeswitch = FreeSWITCH<br />&nbsp;&nbsp;&nbsp;&nbsp;gambas = GAMBAS<br />&nbsp;&nbsp;&nbsp;&nbsp;gml = Game Maker<br />&nbsp;&nbsp;&nbsp;&nbsp;gdb = GDB<br />&nbsp;&nbsp;&nbsp;&nbsp;genero = Genero<br />&nbsp;&nbsp;&nbsp;&nbsp;genie = Genie<br />&nbsp;&nbsp;&nbsp;&nbsp;gettext = GetText<br />&nbsp;&nbsp;&nbsp;&nbsp;go = Go<br />&nbsp;&nbsp;&nbsp;&nbsp;groovy = Groovy<br />&nbsp;&nbsp;&nbsp;&nbsp;gwbasic = GwBasic<br />&nbsp;&nbsp;&nbsp;&nbsp;haskell = Haskell<br />&nbsp;&nbsp;&nbsp;&nbsp;haxe = Haxe<br />&nbsp;&nbsp;&nbsp;&nbsp;hicest = HicEst<br />&nbsp;&nbsp;&nbsp;&nbsp;hq9plus = HQ9 Plus<br />&nbsp;&nbsp;&nbsp;&nbsp;html4strict = HTML<br />&nbsp;&nbsp;&nbsp;&nbsp;html5 = HTML 5<br />&nbsp;&nbsp;&nbsp;&nbsp;icon = Icon<br />&nbsp;&nbsp;&nbsp;&nbsp;idl = IDL<br />&nbsp;&nbsp;&nbsp;&nbsp;ini = INI file<br />&nbsp;&nbsp;&nbsp;&nbsp;inno = Inno Script<br />&nbsp;&nbsp;&nbsp;&nbsp;intercal = INTERCAL<br />&nbsp;&nbsp;&nbsp;&nbsp;io = IO<br />&nbsp;&nbsp;&nbsp;&nbsp;j = J<br />&nbsp;&nbsp;&nbsp;&nbsp;java = Java<br />&nbsp;&nbsp;&nbsp;&nbsp;java5 = Java 5<br />&nbsp;&nbsp;&nbsp;&nbsp;javascript = JavaScript<br />&nbsp;&nbsp;&nbsp;&nbsp;jquery = jQuery<br />&nbsp;&nbsp;&nbsp;&nbsp;kixtart = KiXtart<br />&nbsp;&nbsp;&nbsp;&nbsp;latex = Latex<br />&nbsp;&nbsp;&nbsp;&nbsp;ldif = LDIF<br />&nbsp;&nbsp;&nbsp;&nbsp;lb = Liberty BASIC<br />&nbsp;&nbsp;&nbsp;&nbsp;lsl2 = Linden Scripting<br />&nbsp;&nbsp;&nbsp;&nbsp;lisp = Lisp<br />&nbsp;&nbsp;&nbsp;&nbsp;llvm = LLVM<br />&nbsp;&nbsp;&nbsp;&nbsp;locobasic = Loco Basic<br />&nbsp;&nbsp;&nbsp;&nbsp;logtalk = Logtalk<br />&nbsp;&nbsp;&nbsp;&nbsp;lolcode = LOL Code<br />&nbsp;&nbsp;&nbsp;&nbsp;lotusformulas = Lotus Formulas<br />&nbsp;&nbsp;&nbsp;&nbsp;lotusscript = Lotus Script<br />&nbsp;&nbsp;&nbsp;&nbsp;lscript = LScript<br />&nbsp;&nbsp;&nbsp;&nbsp;lua = Lua<br />&nbsp;&nbsp;&nbsp;&nbsp;m68k = M68000 Assembler<br />&nbsp;&nbsp;&nbsp;&nbsp;magiksf = MagikSF<br />&nbsp;&nbsp;&nbsp;&nbsp;make = Make<br />&nbsp;&nbsp;&nbsp;&nbsp;mapbasic = MapBasic<br />&nbsp;&nbsp;&nbsp;&nbsp;matlab = MatLab<br />&nbsp;&nbsp;&nbsp;&nbsp;mirc = mIRC<br />&nbsp;&nbsp;&nbsp;&nbsp;mmix = MIX Assembler<br />&nbsp;&nbsp;&nbsp;&nbsp;modula2 = Modula 2<br />&nbsp;&nbsp;&nbsp;&nbsp;modula3 = Modula 3<br />&nbsp;&nbsp;&nbsp;&nbsp;68000devpac = Motorola 68000 HiSoft Dev<br />&nbsp;&nbsp;&nbsp;&nbsp;mpasm = MPASM<br />&nbsp;&nbsp;&nbsp;&nbsp;mxml = MXML<br />&nbsp;&nbsp;&nbsp;&nbsp;mysql = MySQL<br />&nbsp;&nbsp;&nbsp;&nbsp;nagios = Nagios<br />&nbsp;&nbsp;&nbsp;&nbsp;newlisp = newLISP<br />&nbsp;&nbsp;&nbsp;&nbsp;text = None<br />&nbsp;&nbsp;&nbsp;&nbsp;nsis = NullSoft Installer<br />&nbsp;&nbsp;&nbsp;&nbsp;oberon2 = Oberon 2<br />&nbsp;&nbsp;&nbsp;&nbsp;objeck = Objeck Programming Langua<br />&nbsp;&nbsp;&nbsp;&nbsp;objc = Objective C<br />&nbsp;&nbsp;&nbsp;&nbsp;ocaml-brief = OCalm Brief<br />&nbsp;&nbsp;&nbsp;&nbsp;ocaml = OCaml<br />&nbsp;&nbsp;&nbsp;&nbsp;octave = Octave<br />&nbsp;&nbsp;&nbsp;&nbsp;pf = OpenBSD PACKET FILTER<br />&nbsp;&nbsp;&nbsp;&nbsp;glsl = OpenGL Shading<br />&nbsp;&nbsp;&nbsp;&nbsp;oobas = Openoffice BASIC<br />&nbsp;&nbsp;&nbsp;&nbsp;oracle11 = Oracle 11<br />&nbsp;&nbsp;&nbsp;&nbsp;oracle8 = Oracle 8<br />&nbsp;&nbsp;&nbsp;&nbsp;oz = Oz<br />&nbsp;&nbsp;&nbsp;&nbsp;parasail = ParaSail<br />&nbsp;&nbsp;&nbsp;&nbsp;parigp = PARI/GP<br />&nbsp;&nbsp;&nbsp;&nbsp;pascal = Pascal<br />&nbsp;&nbsp;&nbsp;&nbsp;pawn = PAWN<br />&nbsp;&nbsp;&nbsp;&nbsp;pcre = PCRE<br />&nbsp;&nbsp;&nbsp;&nbsp;per = Per<br />&nbsp;&nbsp;&nbsp;&nbsp;perl = Perl<br />&nbsp;&nbsp;&nbsp;&nbsp;perl6 = Perl 6<br />&nbsp;&nbsp;&nbsp;&nbsp;php = PHP<br />&nbsp;&nbsp;&nbsp;&nbsp;php-brief = PHP Brief<br />&nbsp;&nbsp;&nbsp;&nbsp;pic16 = Pic 16<br />&nbsp;&nbsp;&nbsp;&nbsp;pike = Pike<br />&nbsp;&nbsp;&nbsp;&nbsp;pixelbender = Pixel Bender<br />&nbsp;&nbsp;&nbsp;&nbsp;plsql = PL/SQL<br />&nbsp;&nbsp;&nbsp;&nbsp;postgresql = PostgreSQL<br />&nbsp;&nbsp;&nbsp;&nbsp;povray = POV-Ray<br />&nbsp;&nbsp;&nbsp;&nbsp;powershell = Power Shell<br />&nbsp;&nbsp;&nbsp;&nbsp;powerbuilder = PowerBuilder<br />&nbsp;&nbsp;&nbsp;&nbsp;proftpd = ProFTPd<br />&nbsp;&nbsp;&nbsp;&nbsp;progress = Progress<br />&nbsp;&nbsp;&nbsp;&nbsp;prolog = Prolog<br />&nbsp;&nbsp;&nbsp;&nbsp;properties = Properties<br />&nbsp;&nbsp;&nbsp;&nbsp;providex = ProvideX<br />&nbsp;&nbsp;&nbsp;&nbsp;purebasic = PureBasic<br />&nbsp;&nbsp;&nbsp;&nbsp;pycon = PyCon<br />&nbsp;&nbsp;&nbsp;&nbsp;python = Python<br />&nbsp;&nbsp;&nbsp;&nbsp;pys60 = Python for S60<br />&nbsp;&nbsp;&nbsp;&nbsp;q = q/kdb+<br />&nbsp;&nbsp;&nbsp;&nbsp;qbasic = QBasic<br />&nbsp;&nbsp;&nbsp;&nbsp;rsplus = R<br />&nbsp;&nbsp;&nbsp;&nbsp;rails = Rails<br />&nbsp;&nbsp;&nbsp;&nbsp;rebol = REBOL<br />&nbsp;&nbsp;&nbsp;&nbsp;reg = REG<br />&nbsp;&nbsp;&nbsp;&nbsp;rexx = Rexx<br />&nbsp;&nbsp;&nbsp;&nbsp;robots = Robots<br />&nbsp;&nbsp;&nbsp;&nbsp;rpmspec = RPM Spec<br />&nbsp;&nbsp;&nbsp;&nbsp;ruby = Ruby<br />&nbsp;&nbsp;&nbsp;&nbsp;gnuplot = Ruby Gnuplot<br />&nbsp;&nbsp;&nbsp;&nbsp;sas = SAS<br />&nbsp;&nbsp;&nbsp;&nbsp;scala = Scala<br />&nbsp;&nbsp;&nbsp;&nbsp;scheme = Scheme<br />&nbsp;&nbsp;&nbsp;&nbsp;scilab = Scilab<br />&nbsp;&nbsp;&nbsp;&nbsp;sdlbasic = SdlBasic<br />&nbsp;&nbsp;&nbsp;&nbsp;smalltalk = Smalltalk<br />&nbsp;&nbsp;&nbsp;&nbsp;smarty = Smarty<br />&nbsp;&nbsp;&nbsp;&nbsp;spark = SPARK<br />&nbsp;&nbsp;&nbsp;&nbsp;sparql = SPARQL<br />&nbsp;&nbsp;&nbsp;&nbsp;sql = SQL<br />&nbsp;&nbsp;&nbsp;&nbsp;stonescript = StoneScript<br />&nbsp;&nbsp;&nbsp;&nbsp;systemverilog = SystemVerilog<br />&nbsp;&nbsp;&nbsp;&nbsp;tsql = T-SQL<br />&nbsp;&nbsp;&nbsp;&nbsp;tcl = TCL<br />&nbsp;&nbsp;&nbsp;&nbsp;teraterm = Tera Term<br />&nbsp;&nbsp;&nbsp;&nbsp;thinbasic = thinBasic<br />&nbsp;&nbsp;&nbsp;&nbsp;typoscript = TypoScript<br />&nbsp;&nbsp;&nbsp;&nbsp;unicon = Unicon<br />&nbsp;&nbsp;&nbsp;&nbsp;uscript = UnrealScript<br />&nbsp;&nbsp;&nbsp;&nbsp;ups = UPC<br />&nbsp;&nbsp;&nbsp;&nbsp;urbi = Urbi<br />&nbsp;&nbsp;&nbsp;&nbsp;vala = Vala<br />&nbsp;&nbsp;&nbsp;&nbsp;vbnet = VB.NET<br />&nbsp;&nbsp;&nbsp;&nbsp;vedit = Vedit<br />&nbsp;&nbsp;&nbsp;&nbsp;verilog = VeriLog<br />&nbsp;&nbsp;&nbsp;&nbsp;vhdl = VHDL<br />&nbsp;&nbsp;&nbsp;&nbsp;vim = VIM<br />&nbsp;&nbsp;&nbsp;&nbsp;visualprolog = Visual Pro Log<br />&nbsp;&nbsp;&nbsp;&nbsp;vb = VisualBasic<br />&nbsp;&nbsp;&nbsp;&nbsp;visualfoxpro = VisualFoxPro<br />&nbsp;&nbsp;&nbsp;&nbsp;whitespace = WhiteSpace<br />&nbsp;&nbsp;&nbsp;&nbsp;whois = WHOIS<br />&nbsp;&nbsp;&nbsp;&nbsp;winbatch = Winbatch<br />&nbsp;&nbsp;&nbsp;&nbsp;xbasic = XBasic<br />&nbsp;&nbsp;&nbsp;&nbsp;xml = XML<br />&nbsp;&nbsp;&nbsp;&nbsp;xorg_conf = Xorg Config<br />&nbsp;&nbsp;&nbsp;&nbsp;xpp = XPP<br />&nbsp;&nbsp;&nbsp;&nbsp;yaml = YAML<br />&nbsp;&nbsp;&nbsp;&nbsp;z80 = Z80 Assembler<br />&nbsp;&nbsp;&nbsp;&nbsp;zxbasic = ZXBasic<br />
+</div>
+<a name="6"></a>
+<div class="content_sub_title">Creating A New Paste, The 'api_paste_expire_date' Paramater In Detail</div>
+<div class="content_text">
+	We have 7 valid values available which you can use with the 'api_paste_expire_date' parameter:<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;N = Never<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;10M = 10 Minutes<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;1H = 1 Hour<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;1D = 1 Day<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;1W = 1 Week<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;2W = 2 Weeks<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;1M = 1 Month
+</div>	
+<a name="7"></a>
+<div class="content_sub_title">Creating A New Paste, The 'api_paste_private' Paramater In Detail</div>
+<div class="content_text">
+	We have 3 valid values available which you can use with the 'api_paste_private' parameter:<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;0 = Public<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;1 = Unlisted<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;2 = Private (only allowed in combination with api_user_key, as you have to be logged into your account to access the paste)
+</div>			
+<a name="8"></a>
+<div class="content_sub_title">Creating An 'api_user_key' Using The API Member Login System</div>
+<div class="content_text">
+	With this API we allow you to create applications which use the Pastebin members system. Sending a valid <b>POST</b> request to our API login system will return a unique user session key which can then be used to create a paste as a logged in user for example. Please send a <b>POST</b> request to the link shown below:
+	<div class="code_box">http://pastebin.com/api/api_login.php</div>
+	Include all the following <b>POST</b> parameters when you request the URL:<br />
+	1. <b>api_dev_key</b> - this is your API Developer Key, in your case: YOUR API DEVELOPER KEY<br />
+	2. <b>api_user_name</b> - this is the username of the user you want to login.<br />
+	3. <b>api_user_password</b> - this is the password of the user you want to login.<br /><br />
+
+	If all 3 values match, a valid user session key will be returned. This key can be used as the 'api_user_key' paramater. Multiple keys can be active at the same time for the same user. We do this to allow people to be signed in at multiple locations at once. The api_user_key does not expire.<br /><br />
+	Below is a PHP example using cURL how to create a valid 'api_user_key':
+	<div class="code_box" style="overflow:scroll">$api_dev_key 		= 'YOUR API DEVELOPER KEY';
+$api_user_name 		= 'a_users_username';
+$api_user_password 	= 'a_users_password';
+$api_user_name 		= urlencode($api_user_name);
+$api_user_password 	= urlencode($api_user_password);
+$url			= 'http://pastebin.com/api/api_login.php';
+$ch			= curl_init($url);
+
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, 'api_dev_key='.$api_dev_key.'&api_user_name='.$api_user_name.'&api_user_password='.$api_user_password.'');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_VERBOSE, 1);
+curl_setopt($ch, CURLOPT_NOBODY, 0);
+
+$response 		= curl_exec($ch);
+echo $response;
+</div>
+	Possible Good API Responses: (example)
+	<div class="code_box" style="overflow:scroll">6c6d3fe13b19bbd6e479b705df0a607f</div>
+	Possible Bad API Responses:
+	<div class="code_box" style="overflow:scroll">Bad API request, use POST request, not GET
+Bad API request, invalid api_dev_key
+Bad API request, invalid login
+Bad API request, account not active
+Bad API request, invalid POST parameters</div>
+If you quickly need to set just one api_user_key, you can <a href="http://pastebin.com/api/api_user_key.html">use this form to generate one</a>.
+</div>
+<a name="9"></a>
+<div class="content_sub_title">Listing Pastes Created By A User</div>
+<div class="content_text">
+	With this API you can list all the pastes created by a certain user. You will need send a valid POST request to the URL below to access the data:
+	<div class="code_box">http://pastebin.com/api/api_post.php</div>
+	Include all the following <b>POST</b> parameters when you request the URL:<br />
+	1. <b>api_dev_key</b> - this is your API Developer Key, in your case: YOUR API DEVELOPER KEY<br />
+	2. <b>api_user_key</b> - this is the session key of the logged in user. <a href="/api#7">How to obtain such a key</a><br />
+	3. <b>api_results_limit</b> - this is not required, by default its set to 50, min value is 1, max value is 1000<br />
+	4. <b>api_option</b> - set as 'list'<br /><br />
+
+	Below is a PHP example using cURL how to list pastes:
+	<div class="code_box" style="overflow:scroll">$api_dev_key 		= 'YOUR API DEVELOPER KEY';
+$api_user_key 		= '';
+$api_results_limit 	= '100';
+$url 			= 'http://pastebin.com/api/api_post.php';
+$ch 			= curl_init($url);
+
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, 'api_option=list&api_user_key='.$api_user_key.'&api_dev_key='.$api_dev_key.'&api_results_limit='.$api_results_limit.'');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_VERBOSE, 1);
+curl_setopt($ch, CURLOPT_NOBODY, 0);
+
+$response  		= curl_exec($ch);
+echo $response;</div>
+
+	Below is an example output of a users paste listing:
+	<div class="code_box" style="overflow:scroll">&lt;paste&gt;
+	&lt;paste_key&gt;0b42rwhf&lt;/paste_key&gt;
+	&lt;paste_date&gt;1297953260&lt;/paste_date&gt;
+	&lt;paste_title&gt;javascript test&lt;/paste_title&gt;
+	&lt;paste_size&gt;15&lt;/paste_size&gt;
+	&lt;paste_expire_date&gt;1297956860&lt;/paste_expire_date&gt;
+	&lt;paste_private&gt;0&lt;/paste_private&gt;
+	&lt;paste_format_long&gt;JavaScript&lt;/paste_format_long&gt;
+	&lt;paste_format_short&gt;javascript&lt;/paste_format_short&gt;
+	&lt;paste_url&gt;http://pastebin.com/0b42rwhf&lt;/paste_url&gt;
+	&lt;paste_hits&gt;15&lt;/paste_hits&gt;
+&lt;/paste&gt;
+&lt;paste&gt;
+	&lt;paste_key&gt;0C343n0d&lt;/paste_key&gt;
+	&lt;paste_date&gt;1297694343&lt;/paste_date&gt;
+	&lt;paste_title&gt;Welcome To Pastebin V3&lt;/paste_title&gt;
+	&lt;paste_size&gt;490&lt;/paste_size&gt;
+	&lt;paste_expire_date&gt;0&lt;/paste_expire_date&gt;
+	&lt;paste_private&gt;0&lt;/paste_private&gt;
+	&lt;paste_format_long&gt;None&lt;/paste_format_long&gt;
+	&lt;paste_format_short&gt;text&lt;/paste_format_short&gt;
+	&lt;paste_url&gt;http://pastebin.com/0C343n0d&lt;/paste_url&gt;
+	&lt;paste_hits&gt;65&lt;/paste_hits&gt;
+&lt;/paste&gt;</div>
+	Other Possible Good API Responses: 
+	<div class="code_box" style="overflow:scroll">No pastes found.</div>
+	Possible Bad API Responses:
+	<div class="code_box" style="overflow:scroll">Bad API request, invalid api_option
+Bad API request, invalid api_dev_key
+Bad API request, invalid api_user_key</div>
+</div>
+<a name="10"></a>
+<div class="content_sub_title">Listing Trending Pastes</div>
+<div class="content_text">
+	With this API you can list the 18 currently trending pastes. You will need send a valid POST request to the URL below to access the data:
+	<div class="code_box">http://pastebin.com/api/api_post.php</div>
+	Include all the following <b>POST</b> parameters when you request the URL:<br />
+	1. <b>api_dev_key</b> - this is your API Developer Key, in your case: YOUR API DEVELOPER KEY<br />
+	2. <b>api_option</b> - set as 'trends'<br /><br />
+
+	Below is a PHP example using cURL how to list pastes:
+	<div class="code_box" style="overflow:scroll">$api_dev_key 		= 'YOUR API DEVELOPER KEY';
+$url 			= 'http://pastebin.com/api/api_post.php';
+$ch 			= curl_init($url);
+
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, 'api_option=trends&api_dev_key='.$api_dev_key.'');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_VERBOSE, 1);
+curl_setopt($ch, CURLOPT_NOBODY, 0);
+
+$response  		= curl_exec($ch);
+echo $response;</div>
+
+	Below is an example output of a users paste listing:
+	<div class="code_box" style="overflow:scroll">&lt;paste&gt;
+	&lt;paste_key&gt;4eWYATXe&lt;/paste_key&gt;
+	&lt;paste_date&gt;1319458935&lt;/paste_date&gt;
+	&lt;paste_title&gt;577 French MPs&lt;/paste_title&gt;
+	&lt;paste_size&gt;29397&lt;/paste_size&gt;
+	&lt;paste_expire_date&gt;0&lt;/paste_expire_date&gt;
+	&lt;paste_private&gt;0&lt;/paste_private&gt;
+	&lt;paste_format_long&gt;None&lt;/paste_format_long&gt;
+	&lt;paste_format_short&gt;text&lt;/paste_format_short&gt;
+	&lt;paste_url&gt;http://pastebin.com/4eWYATXe&lt;/paste_url&gt;
+	&lt;paste_hits&gt;804&lt;/paste_hits&gt;
+&lt;/paste&gt;
+</div>
+
+	Possible Bad API Responses:
+	<div class="code_box" style="overflow:scroll">Bad API request, invalid api_option
+Bad API request, invalid api_dev_key</div>
+</div>
+<a name="11"></a>
+<div class="content_sub_title">Deleting A Paste Created By A User</div>
+<div class="content_text">
+	With this API you can delete pastes created by certain users. You will need to send a valid POST request to the URL below to access the data:
+	<div class="code_box">http://pastebin.com/api/api_post.php</div>
+	Include all the following <b>POST</b> parameters when you request the URL:<br />
+	1. <b>api_dev_key</b> - this is your API Developer Key, in your case: YOUR API DEVELOPER KEY<br />
+	2. <b>api_user_key</b> - this is the session key of the logged in user. <a href="/api#7">How to obtain such a key</a><br />
+	3. <b>api_paste_key</b> - this is the unique key of the paste you want to delete.<br />
+	4. <b>api_option</b> - set as 'delete'<br /><br />
+
+	Below is a PHP example using cURL how to create a valid 'api_user_key':
+	<div class="code_box" style="overflow:scroll">$api_dev_key 		= 'YOUR API DEVELOPER KEY';
+$api_user_key 		= '';
+$api_paste_key 		= '';
+$url 			= 'http://pastebin.com/api/api_post.php';
+$ch 			= curl_init($url);
+
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, 'api_option=delete&api_user_key='.$api_user_key.'&api_dev_key='.$api_dev_key.'&api_paste_key='.$api_paste_key.'');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_VERBOSE, 1);
+curl_setopt($ch, CURLOPT_NOBODY, 0);
+
+$response  		= curl_exec($ch);
+echo $response;</div>
+	Possible Good API Responses: 
+	<div class="code_box" style="overflow:scroll">Paste Removed</div>
+	Possible Bad API Responses:
+	<div class="code_box" style="overflow:scroll">Bad API request, invalid api_option
+Bad API request, invalid api_dev_key
+Bad API request, invalid api_user_key
+Bad API request, invalid permission to remove paste</div>
+</div>
+<a name="12"></a>
+<div class="content_sub_title">Getting A Users Information And Settings</div>
+<div class="content_text">
+	With this API you can obtain a users personal information and certain settings. You will need to send a valid POST request to the URL below to access the data:
+	<div class="code_box">http://pastebin.com/api/api_post.php</div>
+	Include all the following <b>POST</b> parameters when you request the URL:<br />
+	1. <b>api_dev_key</b> - this is your API Developer Key, in your case: YOUR API DEVELOPER KEY<br />
+	2. <b>api_user_key</b> - this is the session key of the logged in user. <a href="/api#7">How to obtain such a key</a><br />
+	3. <b>api_option</b> - set as 'userdetails'<br /><br />
+
+	Below is a PHP example using cURL how to create a valid 'api_user_key':
+	<div class="code_box" style="overflow:scroll">$api_dev_key 		= 'YOUR API DEVELOPER KEY';
+$api_user_key 		= '';
+$url 			= 'http://pastebin.com/api/api_post.php';
+$ch 			= curl_init($url);
+
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, 'api_option=userdetails&api_user_key='.$api_user_key.'&api_dev_key='.$api_dev_key.'');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_VERBOSE, 1);
+curl_setopt($ch, CURLOPT_NOBODY, 0);
+
+$response  		= curl_exec($ch);
+echo $response;</div>
+
+
+	Below is an example output of a user information listing:
+	<div class="code_box" style="overflow:scroll">&lt;user&gt;
+	&lt;user_name&gt;wiz_kitty&lt;/user_name&gt;
+	&lt;user_format_short&gt;text&lt;/user_format_short&gt;
+	&lt;user_expiration&gt;N&lt;/user_expiration&gt;
+	&lt;user_avatar_url&gt;http://pastebin.com/cache/a/1.jpg&lt;/user_avatar_url&gt;
+	&lt;user_private&gt;1&lt;/user_private&gt; (0 Public, 1 Unlisted, 2 Private)
+	&lt;user_website&gt;http://myawesomesite.com&lt;/user_website&gt;
+	&lt;user_email&gt;oh@dear.com&lt;/user_email&gt;
+	&lt;user_location&gt;New York&lt;/user_location&gt;
+	&lt;user_account_type&gt;1&lt;/user_account_type&gt; (0 normal, 1 PRO)
+&lt;/user&gt;</div>
+	Possible Bad API Responses:
+	<div class="code_box" style="overflow:scroll">Bad API request, invalid api_option
+Bad API request, invalid api_dev_key
+Bad API request, invalid api_user_key</div>
+</div>
+<a name="13"></a>
+<div class="content_sub_title">Getting paste raw output</div>
+<div class="content_text">This option is actually not part of our API, but you might still want to use it. To get the RAW output of a paste you can use our RAW data output URL: 
+<div class="code_box" style="overflow:scroll">http://pastebin.com/raw.php?i=</div>
+Simply add the <b>paste_key</b> at the end of that URL and you will get the RAW output.
+<br /><br /><br /><b>If you have questions about the API, you can <a href="/contact">contact us</a>.</b>
+</div>						<div style="margin:10px 0;clear:left"></div>
+					</div>
+					<div class="frame_spacer"><!-- --></div>
+					<div id="footer_top" style="clear:both">	
+						<div class="footer_top_title">Pastebin.com Tools &amp; Applications</div>
+						<div class="footer_top_text">
+							<img src="/i/t.gif" alt="" class="icon24 iphone" /><a href="/tools#iphone">iPhone/iPad</a>
+							<img src="/i/t.gif" alt="" class="icon24 windows" /><a href="/tools#windows">Windows</a>
+							<img src="/i/t.gif" alt="" class="icon24 firefox" /><a href="/tools#firefox">Firefox</a>
+							<img src="/i/t.gif" alt="" class="icon24 chrome" /><a href="/tools#chrome">Chrome</a>
+							<img src="/i/t.gif" alt="" class="icon24 webos" /><a href="/tools#webos">WebOS</a>
+							<img src="/i/t.gif" alt="" class="icon24 android" /><a href="/tools#android">Android</a>
+							<img src="/i/t.gif" alt="" class="icon24 macos" /><a href="/tools#macos">Mac</a>
+							<img src="/i/t.gif" alt="" class="icon24 opera" /><a href="/tools#opera">Opera</a>
+							<img src="/i/t.gif" alt="" class="icon24 clickto" /><a href="/tools#clickto">Click.to</a>
+							<img src="/i/t.gif" alt="" class="icon24 unix" /><a href="/tools#pastebincl">UNIX</a>
+							<img src="/i/t.gif" alt="" class="icon24 windowsphone" /><a href="/tools#windowsphone">WinPhone</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<div id="logo_small"></div>
+			<div id="footer_links">
+				<a href="/">create new paste</a> &nbsp;|&nbsp; <a href="/api">api</a> &nbsp;|&nbsp; <a href="/trends">trends</a> &nbsp;|&nbsp; <a href="/users">users</a> &nbsp;|&nbsp; <a href="/faq">faq</a> &nbsp;|&nbsp; <a href="/tools">tools</a> &nbsp;|&nbsp; <a href="/privacy">privacy</a> &nbsp;|&nbsp; <a href="/cookies_policy">cookies policy</a> &nbsp;|&nbsp; <a href="/contact">contact</a> &nbsp;|&nbsp; <a href="/stats">stats</a> &nbsp;|&nbsp; <a href="/pro">go pro</a> 
+				<br />Follow us: <a href="http://www.facebook.com/pages/Pastebincom/150549571626327" target="_blank">pastebin on facebook</a> &nbsp;|&nbsp; <a href="http://twitter.com/#!/pastebin" target="blank">pastebin on twitter</a> &nbsp;|&nbsp; <a href="https://www.google.com/search?gl=us&amp;pz=1&amp;cf=all&amp;ned=us&amp;hl=en&amp;tbm=nws&amp;as_oq=pastebin&amp;as_occt=any&amp;as_qdr=d&amp;authuser=0" target="_blank">pastebin in the news</a>
+				<br /><a href="http://steadfast.net/services/dedicated-servers.php" rel="nofollow" target="_blank">Dedicated Server Hosting</a> by <a href="http://steadfast.net/" rel="nofollow" target="_blank">Steadfast</a><br />Pastebin v3.11 rendered in: 0.006 seconds				
+			</div>
+			<div id="footer_right">&nbsp;</div>
+		</div>
+		<script type="text/javascript">
+		$('.narrow_it').click(function(){
+		    $('#super_frame').animate({width:'100%'}, 500);
+		    $('#footer').animate({width:'100%'}, 500);
+			$(".narrow_it").hide();
+			$(".wide_it").show();
+			$.get('/layout.php', function(data) {
+			});
+		});
+		$('.wide_it').click(function(){
+		    $('#super_frame').animate({width:'1200px'}, 500);
+		    $('#footer').animate({width:'1200px'}, 500);
+			$(".wide_it").hide();
+			$(".narrow_it").show();
+			$.get('/layout.php', function(data) {
+			});
+		});
+		</script>
+<script type="text/javascript"><!--
+if(document.cookie.indexOf('abd=')==-1){window.__abd_ad=1;document.write(unescape('%3Cscript src="//www.adperium.com/js/adframe.js" type="text/javascript"%3E%3C/script%3E'))}
+//--></script>
+<script type="text/javascript"><!--
+if(typeof window.__abd_ad!='undefined'){setTimeout(function(){var a=document.createElement('img');a.src='//80.94.76.4/abd.php?u=2424&h=47f83df0&a='+window.__abd_ad;document.body.appendChild(a);a.style.display='none';var b=new Date();b.setTime(b.getTime()+86400000);document.cookie='abd='+window.__abd_ad+'; expires='+b.toGMTString()+'; path=/'},1000)};
+//--></script>
+	</body>
+</html>	
